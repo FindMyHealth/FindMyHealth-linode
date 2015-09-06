@@ -77,10 +77,21 @@ def hospitals():
 			if len(valid_hospitals) > 0:
 				data = []
 				for hosp in valid_hospitals:
-					arr = jsonify({'name'
-					
-				return "Hi"
-				#append = {'name':hosp[,'':''}
+					arr = {
+						'name' : hosp[1],
+						'lat' : float(hosp[0][11]),
+						'lng' : float(hosp[0][12]),
+						'wait_time' : int(hosp[0][2]),
+						'drive_time' : int(hosp[2]/60),
+						'total_time' : int(hosp[0][2]) + int(hosp[2]/60),
+						'address' : hosp[0][10],
+						'phone' : hosp[0][8]
+					}
+					data.append(arr)
+				
+				data = jsonify({'data':data})
+	
+				return data
 
 			else:
 				return make_response(jsonify({'error':'Options not found!'}), 404)	
