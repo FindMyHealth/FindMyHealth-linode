@@ -4,15 +4,16 @@ import mysql.connector
 from sqlalchemy import Integer, ForeignKey, String, Column
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.associationproxy import association_proxy
+from secret import db_password, google_secret_key
 
 app = Flask(__name__)
 
-google_key = 'AIzaSyBh5wArbL1a6TrV_39GWwUaTF8JtkIWLoM'
+google_key = google_secret_key
 
 # database setup
 my_host = "localhost"
 my_username = "root"
-my_password = "tPWrd5"
+my_password = db_password
 my_database = "health"
 
 # establish MySQL connection
@@ -85,7 +86,10 @@ def hospitals():
 						'drive_time' : int(hosp[2]/60),
 						'total_time' : int(hosp[0][2]) + int(hosp[2]/60),
 						'address' : hosp[0][10],
-						'phone' : hosp[0][8]
+						'phone' : hosp[0][8],
+						'time_until_sent_home' : int(hosp[0][3]),
+						'broken_bone' : int(hosp[0][4]),
+						'transfer_time' : int(hosp[0][5])
 					}
 					data.append(arr)
 				
